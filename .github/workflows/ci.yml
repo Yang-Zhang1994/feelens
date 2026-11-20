@@ -54,7 +54,7 @@ jobs:
       # GitHub Pages has no SPA fallback; serving index.html as the 404 page keeps deep links working.
       - run: cp dist/feelens/browser/index.html dist/feelens/browser/404.html
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: dist/feelens/browser
       - id: deployment
