@@ -1,0 +1,5 @@
+.legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding: 0; margin: 0 0 0.5rem; font-size: 0.9rem; }
+.legend li { display: flex; align-items: center; gap: 0.4rem; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--muted); font-size: 13px; font-family: system-ui, sans-serif; }
+.grid { stroke: var(--line); stroke-width: 1; }

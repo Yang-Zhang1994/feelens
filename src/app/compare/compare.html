@@ -1,0 +1,67 @@
+<h1>What fees cost you</h1>
+<p class="lede">Same plan, same market return. The only difference is the fee each fund charges.</p>
+
+@if (state().status === 'loading') {
+  <p role="status">Loading funds…</p>
+} @else if (chosen().length < 2) {
+  <div class="card">
+    <p>Pick at least two funds to compare.</p>
+    <a class="button" routerLink="/funds">Choose funds</a>
+  </div>
+} @else {
+  <form class="plan card" [formGroup]="form" aria-label="Investment plan" (submit)="$event.preventDefault()">
+    <div>
+      <label for="initial">Starting amount ($)</label>
+      <input id="initial" type="number" inputmode="decimal" formControlName="initial" [attr.aria-invalid]="!!error('initial')" aria-describedby="initial-error" />
+      <p class="error" id="initial-error">{{ error('initial') }}</p>
+    </div>
+    <div>
+      <label for="monthly">Monthly contribution ($)</label>
+      <input id="monthly" type="number" inputmode="decimal" formControlName="monthly" [attr.aria-invalid]="!!error('monthly')" aria-describedby="monthly-error" />
+      <p class="error" id="monthly-error">{{ error('monthly') }}</p>
+    </div>
+    <div>
+      <label for="years">Years invested</label>
+      <input id="years" type="number" inputmode="numeric" formControlName="years" [attr.aria-invalid]="!!error('years')" aria-describedby="years-error" />
+      <p class="error" id="years-error">{{ error('years') }}</p>
+    </div>
+    <div>
+      <label for="grossReturn">Return before fees (% a year)</label>
+      <input id="grossReturn" type="number" inputmode="decimal" step="0.5" formControlName="grossReturn" [attr.aria-invalid]="!!error('grossReturn')" aria-describedby="grossReturn-error" />
+      <p class="error" id="grossReturn-error">{{ error('grossReturn') }}</p>
+    </div>
+  </form>
+
+  @if (rows().length) {
+    <p class="insight" data-testid="insight">{{ insight() }}</p>
+
+    <div class="card table-wrap" tabindex="0" role="region" aria-label="Comparison results">
+      <table>
+        <caption>You contribute {{ money(rows()[0].contributed) }} in total</caption>
+        <thead>
+          <tr><th scope="col">Fund</th><th scope="col" class="num">Fee</th><th scope="col" class="num">Ending value</th><th scope="col" class="num">Lost to fees</th><th scope="col" class="num">Behind cheapest</th></tr>
+        </thead>
+        <tbody>
+          @for (row of rows(); track row.fund.id) {
+            <tr>
+              <th scope="row">{{ row.fund.name }}</th>
+              <td class="num">{{ row.fund.mer.toFixed(2) }}%</td>
+              <td class="num">{{ money(row.endValue) }}</td>
+              <td class="num">{{ money(row.lostToFees) }}</td>
+              <td class="num">{{ row.behindCheapest > 0 ? money(row.behindCheapest) : '—' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Balance over time</h2>
+    <div class="card">
+      <app-growth-chart [series]="series()" [summary]="insight()" />
+    </div>
+  } @else {
+    <p class="error" role="alert">Fix the highlighted fields to see the comparison.</p>
+  }
+
+  <p><a routerLink="/funds">Change funds</a></p>
+}

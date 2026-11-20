@@ -1,0 +1,10 @@
+[
+  { "id": "cdn-eq-index", "name": "Canadian Equity Index ETF", "category": "Equity", "kind": "Index ETF", "mer": 0.06 },
+  { "id": "global-eq-index", "name": "Global Equity Index ETF", "category": "Equity", "kind": "Index ETF", "mer": 0.2 },
+  { "id": "cdn-eq-active-a", "name": "Canadian Equity Fund, Series A", "category": "Equity", "kind": "Mutual fund", "mer": 2.1 },
+  { "id": "cdn-eq-active-f", "name": "Canadian Equity Fund, Series F", "category": "Equity", "kind": "Mutual fund", "mer": 1.05 },
+  { "id": "balanced-etf", "name": "Balanced Asset Allocation ETF", "category": "Balanced", "kind": "Index ETF", "mer": 0.24 },
+  { "id": "balanced-active-a", "name": "Balanced Income Fund, Series A", "category": "Balanced", "kind": "Mutual fund", "mer": 1.95 },
+  { "id": "cdn-bond-index", "name": "Canadian Bond Index ETF", "category": "Fixed income", "kind": "Index ETF", "mer": 0.1 },
+  { "id": "money-market", "name": "Money Market Fund", "category": "Cash", "kind": "Mutual fund", "mer": 0.3 }
+]

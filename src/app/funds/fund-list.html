@@ -1,0 +1,63 @@
+<h1>Compare fund fees</h1>
+<p class="lede">A 2% fee sounds small. Pick up to {{ max }} funds to see what it costs over decades.</p>
+
+<form class="filters card" [formGroup]="filter" role="search" (submit)="$event.preventDefault()">
+  <div>
+    <label for="search">Search</label>
+    <input id="search" type="search" formControlName="search" placeholder="Fund name" />
+  </div>
+  <div>
+    <label for="category">Category</label>
+    <select id="category" formControlName="category">
+      <option value="All">All</option>
+      <option>Equity</option>
+      <option>Balanced</option>
+      <option>Fixed income</option>
+      <option>Cash</option>
+    </select>
+  </div>
+  <div>
+    <label for="sort">Sort by</label>
+    <select id="sort" formControlName="sort">
+      <option value="mer-asc">Fee, low to high</option>
+      <option value="mer-desc">Fee, high to low</option>
+      <option value="name">Name</option>
+    </select>
+  </div>
+</form>
+
+@switch (state().status) {
+  @case ('loading') { <p role="status">Loading funds…</p> }
+  @case ('error') { <p class="error" role="alert">Could not load the fund list. Try refreshing.</p> }
+  @default {
+    <div class="card table-wrap" tabindex="0" role="region" aria-label="Fund table">
+      <table>
+        <caption class="sr-only">Funds</caption>
+        <thead>
+          <tr><th scope="col">Compare</th><th scope="col">Fund</th><th scope="col">Category</th><th scope="col">Type</th><th scope="col" class="num">Fee (MER)</th></tr>
+        </thead>
+        <tbody>
+          @for (fund of visible(); track fund.id) {
+            <tr [class.picked]="isSelected(fund.id)">
+              <td>
+                <input type="checkbox" [id]="'pick-' + fund.id" [checked]="isSelected(fund.id)"
+                  [disabled]="!isSelected(fund.id) && selected().length >= max" (change)="toggle(fund.id)" />
+              </td>
+              <td><label class="name" [for]="'pick-' + fund.id">{{ fund.name }}</label></td>
+              <td>{{ fund.category }}</td>
+              <td>{{ fund.kind }}</td>
+              <td class="num">{{ fund.mer.toFixed(2) }}%</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5">No funds match.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}
+
+<div class="bar">
+  <span aria-live="polite">{{ selected().length }} of {{ max }} selected</span>
+  <button type="button" [disabled]="selected().length < 2" (click)="compare()">Compare {{ selected().length }} funds</button>
+</div>

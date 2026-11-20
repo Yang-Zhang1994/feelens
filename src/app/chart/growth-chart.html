@@ -1,0 +1,24 @@
+<ul class="legend">
+  @for (line of lines(); track line.label) {
+    <li>
+      <svg width="28" height="10" aria-hidden="true">
+        <line x1="0" y1="5" x2="28" y2="5" [attr.stroke]="line.color" stroke-width="3" [attr.stroke-dasharray]="line.dash" />
+      </svg>
+      {{ line.label }}
+    </li>
+  }
+</ul>
+<svg class="chart" [attr.viewBox]="'0 0 ' + W + ' ' + H" role="img" [attr.aria-label]="summary()">
+  @for (tick of yTicks(); track tick.label) {
+    <line [attr.x1]="PAD.left" [attr.x2]="W - PAD.right" [attr.y1]="tick.y" [attr.y2]="tick.y" class="grid" />
+    <text [attr.x]="PAD.left - 8" [attr.y]="tick.y + 4" text-anchor="end">{{ tick.label }}</text>
+  }
+  @for (tick of xTicks(); track tick.label) {
+    <text [attr.x]="tick.x" [attr.y]="H - PAD.bottom + 18" text-anchor="middle">{{ tick.label }}</text>
+  }
+  <text [attr.x]="W - PAD.right" [attr.y]="H - 2" text-anchor="end">years</text>
+  @for (line of lines(); track line.label) {
+    <polyline [attr.points]="line.points" fill="none" [attr.stroke]="line.color" stroke-width="2.5"
+      [attr.stroke-dasharray]="line.dash" stroke-linejoin="round" />
+  }
+</svg>

@@ -1,0 +1,6 @@
+.filters { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+@media (max-width: 600px) { .filters { grid-template-columns: 1fr; } }
+label.name { color: var(--ink); font-size: 1rem; margin: 0; cursor: pointer; }
+tr.picked { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
